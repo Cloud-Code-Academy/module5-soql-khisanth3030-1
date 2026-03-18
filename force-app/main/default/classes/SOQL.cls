@@ -103,9 +103,15 @@ public with sharing class SOQL {
 	 * @return A map of Task Ids to Task records.
 	 * Update the corresponding test class and testGetTasksDueNextWeek method to cover this method
 	 */
-	//[public | private ] [static] data_type method_name (input parameters) {
-	//  The body of the method
-	//}
+		public static Map<Id, Task>	getTasksDueNextWeek()	{
+			Map<Id, Task> taskMap = new Map<Id, Task>();
+			List<Task> tasks = [SELECT Id, Subject, ActivityDate 
+			FROM Task WHERE ActivityDate = NEXT_N_DAYS:7];
+			for(Task task : tasks) {
+				taskMap.put(task.Id, task);
+			}
+			return taskMap;
+		}
 
 	/**
 	 * Question 7
