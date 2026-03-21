@@ -301,7 +301,8 @@ public with sharing class SOQL {
 	 * @return The Account Name of the Contact.
 	 */
 	public static String getAccountNameForContact(String contactId) {
-		return null; // Replace null with the variable you used to store the result
+		String accountName = [SELECT Account.Name FROM Contact WHERE Id = :contactId].Account.Name;
+		return accountName; 
 	}
 
 	/**
@@ -312,7 +313,10 @@ public with sharing class SOQL {
 	 * @return An Account record with related Opportunities.
 	 */
 	public static Account getAccountAndOpportunitiesFromAccountId(Id accountId) {
-		return null; // Replace null with the variable you used to store the result
+		Account result = new Account();
+		result = [SELECT Id, Name, (SELECT Id, Name FROM Opportunities) 
+		FROM Account WHERE Id = :accountId LIMIT 1];
+		return result; 
 	}
 
 	/**
